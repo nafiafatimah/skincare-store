@@ -3,6 +3,8 @@ const router = express.Router();
 const connection = require('../config/db.js');
 const {body, validationResult } = require('express-validator');
 
+
+//rputes untuk menampilkan semua menu
 router.get('/', function (req, res){
     connection.query(`SELECT pelanggan.nama_pelanggan AS nama_pelanggan, 
     karyawan.nama_karyawan AS nama_karyawan, 
@@ -30,6 +32,8 @@ router.get('/', function (req, res){
         }
     })
 });
+
+//routes untuk menambahkan menu
 router.post('/store',[
     //validation
     body('id_pelanggan').notEmpty(),
@@ -68,6 +72,8 @@ router.post('/store',[
         }
     })
 })
+
+//routes untuk mencari menu lewat id
 router.get('/(:id)', function (req, res) {
     let id = req.params.id;
     connection.query(`SELECT pelanggan.nama_pelanggan AS nama_pelanggan, 
@@ -103,6 +109,8 @@ router.get('/(:id)', function (req, res) {
         }
     })
 })
+
+//routes untuk mengedit data menu lewat id
 router.patch('/update/:id', [
     body('id_pelanggan').notEmpty(),
     body('id_pemasok').notEmpty(),
@@ -139,6 +147,7 @@ router.patch('/update/:id', [
     })
 })
 
+//routes untuk delete menu lewat id
 router.delete('/delete/(:id)', function(req, res){
     let id = req.params.id;
     connection.query(`delete from menu where id_menu = ${id}`, function (err, rows){

@@ -12,7 +12,7 @@ connection.connect(function (error){
     if(!!error){
         console.log(error)
     }else{
-        console.log('koneksi berhasil');
+        console.log('Connection Succses');
     }
 })
 module.exports = connection;

@@ -3,6 +3,7 @@ const router = express.Router();
 const connection = require('../config/db.js');
 const {body, validationResult } = require('express-validator');
 
+//routes untuk memanggil / mencari data yanga da di tabel kategori 
 router.get('/', function (req, res){
     connection.query('select * from kategori order by id_kategori desc', function(err, rows){
         if(err){
@@ -19,6 +20,8 @@ router.get('/', function (req, res){
         }
     })
 });
+
+//routes untuk menambahkan data kategori
 router.post('/store',[
     //validation
     body('nama_kategori').notEmpty()
@@ -47,6 +50,8 @@ router.post('/store',[
         }
     })
 })
+
+//routes untuk mencari/ menampilkan data karyawan lewat id
 router.get('/(:id)', function (req, res) {
     let id = req.params.id;
     connection.query(`select * from kategori where id_kategori = ${id}`, function(err, rows) {
@@ -71,6 +76,8 @@ router.get('/(:id)', function (req, res) {
         }
     })
 })
+
+//routes untuk mengedit kategori lewat id
 router.patch('/update/:id', [
     body('nama_kategori').notEmpty()
 ], (req, res) => {
@@ -99,6 +106,7 @@ router.patch('/update/:id', [
     })
 })
 
+//routes untuk mendelte data kategori lewat id
 router.delete('/delete/(:id)', function(req, res){
     let id = req.params.id;
     connection.query(`delete from kategori where id_kategori = ${id}`, function (err, rows){

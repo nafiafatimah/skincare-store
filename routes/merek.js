@@ -3,6 +3,8 @@ const router = express.Router();
 const connection = require('../config/db.js');
 const {body, validationResult } = require('express-validator');
 
+
+//routes untuk mencari/memanggil data di tabel merek
 router.get('/', function (req, res){
     connection.query('select * from merek order by id_merek desc', function(err, rows){
         if(err){
@@ -19,6 +21,8 @@ router.get('/', function (req, res){
         }
     })
 });
+
+//routes untuk menambah data di tabel merek
 router.post('/store',[
     //validation
     body('nama_merek').notEmpty()
@@ -47,6 +51,8 @@ router.post('/store',[
         }
     })
 })
+
+//routes untuk mencari data merek lewat id
 router.get('/(:id)', function (req, res) {
     let id = req.params.id;
     connection.query(`select * from merek where id_merek = ${id}`, function(err, rows) {
@@ -71,6 +77,8 @@ router.get('/(:id)', function (req, res) {
         }
     })
 })
+
+//routes untuk mengedit data lewat id
 router.patch('/update/:id', [
     body('nama_merek').notEmpty()
 ], (req, res) => {
@@ -99,6 +107,8 @@ router.patch('/update/:id', [
     })
 })
 
+
+//routes untuk mendelete data lewat id
 router.delete('/delete/(:id)', function(req, res){
     let id = req.params.id;
     connection.query(`delete from merek where id_merek = ${id}`, function (err, rows){

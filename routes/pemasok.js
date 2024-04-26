@@ -3,6 +3,7 @@ const router = express.Router();
 const connection = require('../config/db.js');
 const {body, validationResult } = require('express-validator');
 
+//routes untuk menampilkan data yang ada di tabel pemasok
 router.get('/', function (req, res){
     connection.query('select * from pemasok order by id_pemasok desc', function(err, rows){
         if(err){
@@ -19,6 +20,8 @@ router.get('/', function (req, res){
         }
     })
 });
+
+//routes untuk menambah data di tabel pemasok
 router.post('/store',[
     //validation
     body('nama_toko').notEmpty(),
@@ -49,6 +52,8 @@ router.post('/store',[
         }
     })
 })
+
+//routes untuk mencari data lewat id
 router.get('/(:id)', function (req, res) {
     let id = req.params.id;
     connection.query(`select * from pemasok where id_pemasok = ${id}`, function(err, rows) {
@@ -73,6 +78,8 @@ router.get('/(:id)', function (req, res) {
         }
     })
 })
+
+//routes untuk update data dari id
 router.patch('/update/:id', [
       //validation
       body('nama_toko').notEmpty(),
@@ -104,6 +111,7 @@ router.patch('/update/:id', [
     })
 })
 
+//routes untuk delete lewat id
 router.delete('/delete/(:id)', function(req, res){
     let id = req.params.id;
     connection.query(`delete from pemasok where id_pemasok = ${id}`, function (err, rows){

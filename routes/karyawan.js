@@ -3,6 +3,7 @@ const router = express.Router();
 const connection = require('../config/db.js');
 const {body, validationResult } = require('express-validator');
 
+//routes untuk mencari/ menampilkan data karyawan
 router.get('/', function (req, res){
     connection.query('select * from karyawan order by id_karyawan desc', function(err, rows){
         if(err){
@@ -19,6 +20,8 @@ router.get('/', function (req, res){
         }
     })
 });
+
+//routes untuk menambah karyawan
 router.post('/store',[
     //validation
     body('nama_karyawan').notEmpty(),
@@ -51,6 +54,8 @@ router.post('/store',[
         }
     })
 })
+
+//routes untuk mencari karyawan lewat id
 router.get('/(:id)', function (req, res) {
     let id = req.params.id;
     connection.query(`select * from karyawan where id_karyawan = ${id}`, function(err, rows) {
@@ -75,6 +80,8 @@ router.get('/(:id)', function (req, res) {
         }
     })
 })
+
+//routes untuk update data karyawan lewat id
 router.patch('/update/:id', [
     body('nama_karyawan').notEmpty(),
     body('alamat').notEmpty(),
@@ -107,6 +114,7 @@ router.patch('/update/:id', [
     })
 })
 
+//routes untuk mendelete data karyawan lewat id 
 router.delete('/delete/(:id)', function(req, res){
     let id = req.params.id;
     connection.query(`delete from karyawan where id_karyawan = ${id}`, function (err, rows){

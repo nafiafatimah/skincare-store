@@ -3,6 +3,7 @@ const router = express.Router();
 const connection = require('../config/db.js');
 const {body, validationResult } = require('express-validator');
 
+//routes untuk mengambil semua data di tabel harga
 router.get('/', function (req, res){
     connection.query(`SELECT m.nama_merek, k.nama_kategori,h.harga
     FROM harga h INNER JOIN merek m ON h.id_merek = m.id_merek
@@ -21,6 +22,8 @@ router.get('/', function (req, res){
         }
     })
 });
+
+//routes untuk menambah harga
 router.post('/store',[
     //validation
     body('id_merek').notEmpty(),
@@ -53,6 +56,8 @@ router.post('/store',[
         }
     })
 })
+
+//routes untuk mencari harga melalui id
 router.get('/(:id)', function (req, res) {
     let id = req.params.id;
     connection.query(`SELECT m.nama_merek, k.nama_kategori,h.harga
@@ -79,6 +84,8 @@ router.get('/(:id)', function (req, res) {
         }
     })
 })
+
+//routes untuk melakukan update data lewat id
 router.patch('/update/:id', [
     body('id_merek').notEmpty(),
     body('id_kategori').notEmpty(),
@@ -111,6 +118,7 @@ router.patch('/update/:id', [
     })
 })
 
+//routes untuk delete harga melalui id
 router.delete('/delete/(:id)', function(req, res){
     let id = req.params.id;
     connection.query(`delete from harga where id_harga = ${id}`, function (err, rows){

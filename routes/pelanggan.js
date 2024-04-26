@@ -3,6 +3,8 @@ const router = express.Router();
 const connection = require('../config/db.js');
 const {body, validationResult } = require('express-validator');
 
+
+//routes untuk mencari/ memangil data yang ada do tabel pelangggan
 router.get('/', function (req, res){
     connection.query('select * from pelanggan order by id_pelanggan desc', function(err, rows){
         if(err){
@@ -19,6 +21,8 @@ router.get('/', function (req, res){
         }
     })
 });
+
+//routes untuk menambah data pada tabel pelanggan
 router.post('/store',[
     //validation
     body('nama_pelanggan').notEmpty(),
@@ -51,6 +55,8 @@ router.post('/store',[
         }
     })
 })
+
+//routes untuk mencari data di tabel pelanggan lewat id
 router.get('/(:id)', function (req, res) {
     let id = req.params.id;
     connection.query(`select * from pelanggan where id_pelanggan = ${id}`, function(err, rows) {
@@ -75,6 +81,8 @@ router.get('/(:id)', function (req, res) {
         }
     })
 })
+
+//routes untuk update lewat id
 router.patch('/update/:id', [
     body('nama_pelanggan').notEmpty(),
     body('alamat').notEmpty(),
@@ -107,6 +115,8 @@ router.patch('/update/:id', [
     })
 })
 
+
+//routes utuk delete lewat id
 router.delete('/delete/(:id)', function(req, res){
     let id = req.params.id;
     connection.query(`delete from pelanggan where id_pelanggan = ${id}`, function (err, rows){
